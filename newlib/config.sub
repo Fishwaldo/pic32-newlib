@@ -894,6 +894,10 @@ case $basic_machine in
 	pentium4-*)
 		basic_machine=i786-`echo $basic_machine | sed 's/^[^-]*-//'`
 		;;
+        pic32mx)
+                basic_machine=pic32mx-mchp
+                os=-elf
+                ;;
 	pn)
 		basic_machine=pn-gould
 		;;

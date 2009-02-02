@@ -218,6 +218,9 @@ case "${host_cpu}" in
   powerpc*)
 	machine_dir=powerpc
 	;;
+  pic32mx)
+	machine_dir=mips
+	;;
   sh | sh64)
 	machine_dir=sh
 	;;

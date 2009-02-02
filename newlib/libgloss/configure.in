@@ -65,6 +65,10 @@ case "${target}" in
 	AC_CONFIG_SUBDIRS(mips)
 	config_testsuite=true
 	;;
+  pic32mx*-*-*)
+	AC_CONFIG_SUBDIRS(pic32mx)
+	config_testsuite=false
+	;;
   powerpc-*-*|powerpcle-*-*)
 	AC_CONFIG_SUBDIRS(rs6000)
 	config_testsuite=true

@@ -832,6 +832,13 @@ newlib/libgloss/pa/test.c -text
 newlib/libgloss/pa/w89k-io.c -text
 newlib/libgloss/pa/w89k.h -text
 newlib/libgloss/pa/w89k.ld -text
+newlib/libgloss/pic32mx/Makefile.in -text
+newlib/libgloss/pic32mx/aclocal.m4 -text
+newlib/libgloss/pic32mx/configure -text
+newlib/libgloss/pic32mx/configure.in -text
+newlib/libgloss/pic32mx/regs.S -text
+newlib/libgloss/pic32mx/syscalls.c -text
+newlib/libgloss/pic32mx/test.c -text
 newlib/libgloss/print.c -text
 newlib/libgloss/putnum.c -text
 newlib/libgloss/read.c -text
