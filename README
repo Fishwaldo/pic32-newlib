@@ -1,0 +1,67 @@
+Bef installation instructions
+
+What you need:
+1) The C32 Suite installed and access to copy them to your unix box
+2) A installed/functioning C32 GCC compiler for your unix box (See
+http://www.paintyourdragon.com/uc/osxpic32/index.html but read below for
+important info)
+
+3) The pic32 port of newlib
+(http://svn.neostats.net/svn/pic32-newlib/Trunk/)
+
+What my assumptions are:
+1) I'm not installing to the system wide directory, but to a private home
+directory (hence, the c32 install.sh script is not valid)
+
+What you do:
+1) Firstly, follow the instructions to build your GCC version that is
+contained on Phillip Burgess's page above.
+
+(I made one change to the build.sh directory - On Line 48, changed the
+--prefix option to "/home/pic32/". I suggest for the moment you do the same,
+as I don't know if the newlib files will mess up your System Include files
+or not - If you do this, you also should add the new /home/pic32/bin
+directory to your Path)
+
+2) Ignore the install.sh script that Phillip Burgess provides, as we will be
+using only a limited number of files (for now) from the C32 Suite
+
+3) In the GCC directory, you can execute "make install" and this should
+install the GCC files into directories such as /home/pic32/bin and
+/home/pic32/lib etc
+
+4) From the C32 Suite, Place the following files (preserving directory
+structures etc) into the following directory:
+/home/pic32/pic32mx/include
+
+(from C32 Suite)
+pic32-libs/include/cp0defs.h -> /home/pic32/pic32mx/include/cp0defs.h
+pic32-libs/include/peripheral/* -> /home/pic32/pic32mx/include/peripheral/*
+pic32-libs/include/p32xxxx.h -> /home/pic32/pic32mx/include/p32xxxx.h
+pic32-libs/include/plib.h -> /home/pic32/pic32mx/include/plib.h
+pic32-libs/include/proc/* -> /home/pic32/pic32mx/include/proc/*
+pic32-libs/include/sys/attribs.h -> /home/pic32/pic32mx/include/sys/attribs.h
+
+pic32-libs/c/startup/crt0.S -> (the directory where you are reading this
+file)/newlib/libgloss/pic32mx/crt0.S
+
+(you may need one or two other files, please let me know if thats the case)
+
+5) Now, you can build newlib ->
+cd into the newlib directory and type:
+"./configure  --prefix=/home/pic32/ --target=pic32mx --enable-target-optspace --disable-newlib-atexit-alloc"
+(you can read about the options i used in the newlib documentation)
+
+6) Now type "make" and go have a cup of coffee, or a beer :)
+
+7) When finished, type "make install"
+
+8) optional, edit the GCC Spec file to specify what default libs to include:
+/home/pic32/lib/gcc/pic32mx/3.4.4/specs
+Go to Line 51 and Change it so it looks like this:
+--start-group -lc -lm -le -lpic32 %{!mno-peripheral-libs:-lmchp_peripheral %{mprocessor=*:-lmchp_peripheral_%*}} --end-group
+(basically, remove -ldsp and replace with -lpic32)
+
+Now, you are ready to go!
+
+(for a Example Makefile, look in the example directory)

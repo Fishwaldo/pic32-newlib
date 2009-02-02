@@ -1,4 +1,10 @@
 * text=auto !eol
+/COPYING -text
+Example/Makefile -text
+Example/test.c -text
+/MAINTAINERS -text
+/README -text
+/TODO -text
 newlib/.cvsignore -text
 newlib/COPYING -text
 newlib/COPYING.LIB -text

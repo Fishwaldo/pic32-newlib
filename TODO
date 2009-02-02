@@ -1,0 +1,15 @@
+newlib/libgloss/pic32/exceptions.c 
+ * Code the Stack Save/Restore in _general_exception_context()
+ * figure out why I can't have both a nomips16 and weak attribute on the
+   same function
+
+newlib/libgloss/pic32/crt0.S
+ * either import Microchips version (after we get approval) or Write our own
+
+newlib/libgloss/pic32/read.c, write.c
+ * output to USART2 as per the standard Microchip libc
+
+Misc:
+ * Test atexit() function calls really do "run" when exit() is called
+ * Check what other "syscalls" are missing from the pic32mx libgloss
+   function (ie, libpic32.a - the Hardware Abrastraction Layer for newlib)
