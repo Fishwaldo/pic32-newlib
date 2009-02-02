@@ -27,7 +27,8 @@ sbrk (nbytes)
   if (sizeof (unsigned int) != 4)
     return (char *)-1;
 
-  get_mem_info(&mem);
+  mem.size = 0x8000;
+//  get_mem_info(&mem);
   /* NOTE: The value returned from the get_mem_info call is the amount
      of memory, and not the address of the (last byte + 1) */
 
