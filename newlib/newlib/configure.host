@@ -678,6 +678,9 @@ case "${host}" in
   mn10?00-*-*)
 	syscall_dir=syscalls
 	;;
+  pic32mx-*)
+        newlib_cflags="${newlib_cflags} -DSMALL_MEMORY -DMISSING_SYSCALL_NAMES"
+	;;
   powerpc*-*-eabialtivec*)
 	default_newlib_io_long_long="yes"
 	newlib_cflags="${newlib_cflags} -DMISSING_SYSCALL_NAMES"

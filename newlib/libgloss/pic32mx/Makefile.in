@@ -65,9 +65,14 @@ OBJCOPY = `if [ -f ${objroot}/../binutils/objcopy ] ; \
 	else t='$(program_transform_name)'; echo objcopy | sed -e $$t ; fi`
 
 CRT0 = @crt0@
-GENOBJS = syscalls.o fstat.o getpid.o isatty.o kill.o \
-	lseek.o print.o putnum.o stat.o unlink.o
-GENOBJS2 = open.o close.o read.o write.o
+
+LIBPIC32_BSP = libpic32.a
+LIBPIC32_OBJS = sbrk.o close.o fstat.o getpid.o isatty.o kill.o \
+	lseek.o open.o print.o stat.o unlink.o write.o read.o
+
+
+LIBE_BSP = libe.a
+LIBE_OBJS = exceptions.o
 
 CFLAGS = -g 
 
@@ -75,7 +80,7 @@ GCC_LDFLAGS = `if [ -d ${objroot}/../gcc ] ; \
 	then echo -L${objroot}/../gcc ; fi`
 
 SCRIPTS = @script_list@
-BSP = @bsp_list@
+BSP = @bsp_list@ $(LIBPIC32_BSP) $(LIBE_BSP)
 
 PART_SPECIFIC_DEFINES = @part_specific_defines@
 
@@ -87,7 +92,7 @@ PART_SPECIFIC_DEFINES = @part_specific_defines@
 # it to link is a good test, so we ignore all the errors for now.
 #
 
-all: ${CRT0} test.o ${BSP}
+all: ${CRT0} $(LIBPIC32_BSP) ${BSP}
 
 #
 # here's where we build the board support packages for each target
@@ -119,12 +124,49 @@ info:
 install-info:
 clean-info:
 
-test.o:	${srcdir}/test.c
-
 # these are for the BSPs
 crt0.o: ${srcdir}/crt0.S
 
-syscalls.o: ${srcdir}/syscalls.c
+sbrk.o: ${srcdir}/sbrk.c
+
+syscalls.o: $(srcdir)/syscalls.c
+
+close.o: $(srcdir)/../close.c
+
+fstat.o: $(srcdir)/../fstat.c
+
+getpid.o: $(srcdir)/../getpid.c
+
+isatty.o: $(srcdir)/../isatty.c
+
+kill.o: $(srcdir)/../kill.c
+
+lseek.o: $(srcdir)/../lseek.c
+
+open.o: $(srcdir)/../open.c
+
+print.o: $(srcdir)/../print.c
+
+putnum.o: $(srcdir)/../putnum.c
+
+stat.o: $(srcdir)/../stat.c
+
+unlink.o: $(srcdir)/../unlink.c
+
+write.o: $(srcdir)/write.c
+
+read.o: $(srcdir)/read.c
+
+
+exceptions.o: ${srcdir}/exceptions.c
+
+$(LIBPIC32_BSP): $(LIBPIC32_OBJS)
+	${AR} ${ARFLAGS} $@ $^
+	${RANLIB} $@
+	
+$(LIBE_BSP): $(LIBE_OBJS)
+	${AR} ${ARFLAGS} $@ $^
+	${RANLIB} $@
 
 # target specific makefile fragment comes in here.
 @target_makefile_frag@

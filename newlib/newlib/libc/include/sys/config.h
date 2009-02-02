@@ -95,7 +95,16 @@
 #endif
 
 #if defined(__mips__) && !defined(__rtems__)
+#if defined(__PIC32MX__) && defined(__section__)
+/* Microchip attribs.h defines a __section__ which interfers with our IMPURE define, so this should work around it for now */
+#define __ATTRIBUTE_IMPURE_PTR__ __section__(".sdata")
+#else
 #define __ATTRIBUTE_IMPURE_PTR__ __attribute__((__section__(".sdata")))
+#endif
+#endif
+
+#if defined(__PIC32MX__)
+#define _REENT_SMALL
 #endif
 
 #ifdef __xstormy16__
